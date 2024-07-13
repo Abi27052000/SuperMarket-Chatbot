@@ -157,21 +157,21 @@ def main():
     pdf.add_page()
     pdf.set_font("Arial", size=12)
 
-    print(" Welcome to the Supermarket. I'm the supermarket chatbot")
+    print("Chatbot: Welcome to the Supermarket. I'm the supermarket chatbot")
     while True:
-        userInputText = input("\nHow can I help you? ").strip()
+        userInputText = input("\nChatbot: How can I help you? \n\nUser: ").strip()
         if farewellFunction(userInputText):
-            print("Thank you for your visit. Have a nice day!")
+            print("Chatbot: Thank you for your visit. Have a nice day!")
             break
         if greetingFunction(userInputText):
-            print("Hello, nice to meet you!")
+            print("Chatbot: Hello, nice to meet you!")
             continue
 
         tokens = preProcessingFunction(userInputText)
 
         neededGoods = goodsSearch(tokens, inventoryAfterStemming)
         if not neededGoods:
-            print("Not sure about this. ")
+            print("Chatbot: Not sure about this. ")
         else:
             # Getting shelf number
             for good in neededGoods:
@@ -186,9 +186,13 @@ def main():
                     print(displayText)
                     pdf.cell(0, 10, displayText, 0, 1)
                 else:
-                    print(f"Sorry, {good.title()} is out of stock")
+                    print(f"Chatbot: Sorry, {good.title()} is out of stock")
 
-        moreTask = input("\nNeed any additional assistance?  ").strip().lower()
+        moreTask = (
+            input("\nChatbot: Need any additional assistance?\n\nUser:  ")
+            .strip()
+            .lower()
+        )
         responses = [
             "yes",
             "yeah",
@@ -200,7 +204,7 @@ def main():
             "okay",
         ]
         if moreTask not in responses:
-            print("Thank you for your visit. Have a nice day!")
+            print("Chatbot: Thank you for your visit. Have a nice day!")
             break
 
     # Saving to the PDF
